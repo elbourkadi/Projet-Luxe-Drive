@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  web:
+    image: node:18
+    container_name: web
+    working_dir: /src
+    command: ng serve
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./Angular project/:/src"
+    depends_on:
+      - mongodb
+
+  api:
+    image: openjdk:19
+    container_name: api
+    working_dir: /app
+    command: java -jar Spring project.jar
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./Spring project/:/app"
+    depends_on:
+      - mongodb
+
+  flask:
+    image: python:3.11.6
+    container_name: flask
+    working_dir: /app
+    command: python app.py
+    ports:
+      - "5001:5001"
+    volumes:
+      - "./Flask project/:/app"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
