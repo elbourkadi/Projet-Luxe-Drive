@@ -56,8 +56,16 @@ Un composant secondaire, développé en Python avec Flask, englobe les mécanism
 Afin d'optimiser le développement et le déploiement de l'application web Luxe Drive, les bons pratiques DevOps sont intégrées de manière méthodique.
 #### 1. Mise en conteneurs avec Docker
 Cette approche simplifie le déploiement en encapsulant les applications et assure une gestion cohérente des environnements, contribuant ainsi à maintenir la stabilité tout au long du cycle de développement.
-#### 2. Orchestration via Kubernetes 
-Cette orchestration automatisée permet une mise à l'échelle fluide, une répartition efficace des charges, et une gestion optimale des ressources.
-#### 3. Contrôle de version avec Git
+#### 2. Contrôle de version avec Git
 Ce qui permet de faciliter la collaboration au sein de l'équipe de développement en offrant un suivi clair des modifications et une résolution efficiente des conflits de code.
 ### Sécurisation de l'application :
+#### 1.	Utilisation d'HTTPS
+Toutes les communications entre le client et le serveur sont sécurisées par HTTPS. Nous utilisons des certificats SSL/TLS via la service Let's Encrypt, pour chiffrer les données transmises, assurant ainsi une confidentialité accrue.
+#### 2.	Hashage des mots de passe
+Les mots de passe des utilisateurs sont stockés de manière sécurisée en utilisant l’algorithme de hachage HS256. Cela garantit que même en cas de violation de données, les mots de passe restent inaccessibles et ne compromettent pas la sécurité des comptes.
+#### 3.	Authentification sécurisée basée sur Spring Security et JWT
+Nous avons implémenté une authentification sécurisée en utilisant Spring Security et JSON Web Tokens (JWT). Spring Security fournit des mécanismes avancés d'authentification, tandis que JWT offre une méthode fiable de transmission d'informations d'authentification entre le client et le serveur de manière sécurisée.
+#### 4.	Authentification à deux facteurs (2FA)
+Pour renforcer la sécurité, notre application web Luxe Drive propose une authentification à deux facteurs. Cette couche de sécurité supplémentaire requiert une vérification supplémentaire au-delà du simple mot de passe, via un lien envoyé à l’email de l'utilisateur, garantissant ainsi une protection accrue contre les accès non autorisés.
+#### 5.	Limitation du Débit avec Flask-Limiter
+En vue de prévenir les abus potentiels de notre API, nous avons intégré Flask-Limiter pour mettre en œuvre une limitation du débit. Cette extension est particulièrement utile pour réguler l'accès et renforcer la sécurité contre d'éventuelles tentatives d'exploitation.
