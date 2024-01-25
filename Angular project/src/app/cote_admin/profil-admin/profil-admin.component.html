@@ -1,0 +1,180 @@
+<app-menu></app-menu>
+<div class="flex-1 h-full overflow-auto bg-gray-100">
+    <app-header-admin [Titre]="Page_Titre"></app-header-admin>
+    <div class="bg-white">
+    <div class="flex flex-col px-8">
+        <div class="lg:container lg:mx-auto space-y-5 mt-8">
+            <p class="text-center font-bold text-3xl">Modifier votre profil</p>
+        </div>
+    </div>
+    <div>
+        <div class="flex flex-col justify-center items-center pt-4 mt-4 mb-6">
+            <div class=" bg-gray-500 text-white font-bold text-4xl rounded-full w-[90px] h-[90px] flex justify-center items-center">
+                {{ prenom[0] }}{{nom[0] }}
+              </div>
+            <p class="pt-4 text-lg font-medium mt-2">{{responseData.prenom +" "+responseData.nom }}</p>
+        </div>
+        <div class="flex justify-center space-x-5 mb-12">
+            <button (click)="onAddImage()" class="rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold bg-black px-4 hover:bg-white hover:text-black">Modifier la photo</button>
+            <button (click)="onRemoveImage()" class="rounded-xl border border-1 h-[48px] border-black w-48 text-black font-semibold bg-white px-4">Supprimer</button>
+        </div>
+    </div>
+
+    <form class="p-6" [formGroup]="modifierProfil" (ngSubmit)="responseData ? onSubmitNotEmpty() : onSubmit()">
+        <div class="flex justify-between mb-10">
+            <label for="nom" class="w-1/2 mr-6 block">
+                <span class="font-semibold">Nom :</span>
+                <input
+                  type="text"
+                  class="w-full block p-4 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                  id="nom"
+                  formControlName="nom"
+                  required
+                />
+                <div class="text-red-700 text-xs " *ngIf="(formSubmitted || modifierProfil.controls['nom'].touched) && modifierProfil.controls['nom'].errors?.['required']">
+                    Nom est obligatoire
+                </div>
+            </label>
+
+            <label for="prenom" class="w-1/2 block">
+                <span class="font-semibold">Prénom :</span>
+                <input
+                  type="text"
+                  class="w-full block p-4 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                  id="prenom"
+                  formControlName="prenom"
+                  required
+                />
+                <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['prenom'].touched) && modifierProfil.controls['prenom'].errors?.['required']">
+                    Prénom est obligatoire
+                </div>
+            </label>
+        </div>
+        <div class="h-0.5 w-[90%] bg-gray-300 opacity-30 mb-8 mx-auto">&nbsp;</div>
+        <div class="flex justify-between mb-10">
+            <label for="email" class="w-1/2 mr-6 block">
+                <span class="font-semibold">Adresse E-mail :</span>
+                <div>
+                <div class="relative">
+                    <input
+                        type="email" readonly
+                        class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                        id="email"
+                        formControlName="email"
+                        required
+                    />
+
+                    <fa-icon [icon]="email" class="absolute top-1/2  transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                </div>  
+                <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['email'].touched) && modifierProfil.controls['email'].errors?.['required']">
+                    Adresse e-mail est obligatoire 
+                </div>
+                <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['email'].touched) && modifierProfil.controls['email'].errors?.['email']">
+                    Veuillez saisir une adresse e-mail valide
+                </div>                      
+                </div>
+
+            </label>
+
+            <label for="tele" class="w-1/2 block">
+                <span class="font-semibold">Téléphone :</span>
+                <div>
+                 <div class="relative">
+                    <input
+                        type="text"
+                        class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                        id="tele"
+                        formControlName="telephone"                    
+                        required
+                    />
+                    <fa-icon [icon]="tele" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                </div>   
+                <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['telephone'].touched) && modifierProfil.controls['telephone'].errors?.['required']">
+                    Téléphone est obligatoire 
+                </div>
+                <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['telephone'].touched) && modifierProfil.controls['telephone'].errors?.['pattern']">
+                    Veuillez saisir un numéro de téléphone valide
+                </div>                       
+                </div>
+
+            </label>
+        </div>
+        <div class="mb-10">
+            <label for="adresse">
+                <span class="font-semibold">Adresse :</span>
+                <div class="relative">
+                    <input
+                        type="text"
+                        class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                        id="adresse"
+                        formControlName="address"                      
+                        required
+                    />
+                    <fa-icon [icon]="adresse" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                </div>    
+                <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['address'].touched) && modifierProfil.controls['address'].errors?.['required']">
+                    Adresse est obligatoire 
+                </div>                      
+            </label>
+        </div>
+        <div class="h-0.5 w-[90%] bg-gray-300 opacity-30 mb-8 mx-auto">&nbsp;</div>
+        <div class="mb-10">
+
+                <label for="password">
+                    <span class="font-semibold">Nouveau mot de passe :</span>
+                    <div>
+                  <div class="relative">
+                        <fa-icon [icon]="password" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                        <input
+                            type="{{ hidePassword ? 'password' : 'text' }}"
+                            class="w-full block p-4 pl-12 mt-4 mb-2 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                            id="password"
+                            formControlName="password"
+                           
+                        />
+                        <fa-icon [icon]="eyePwd" (click)="togglePasswordVisibility()" class="absolute top-1/2 transform -translate-y-1/2 right-4 text-gray-300 cursor-pointer"></fa-icon>
+                    </div>    
+                    <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['password'].touched) && modifierProfil.controls['password'].errors?.['required']">
+                        Mot de passe est obligatoire 
+                    </div>   
+                    <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['password'].touched) && modifierProfil.controls['password'].errors?.['pattern']">
+                        Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et avoir une longueur minimale de 8 caractères
+                    </div>                   
+                    </div>
+                </label>
+              
+                <label for="confirmPwd">
+                    <span class="font-semibold">Confirmer le mot de passe :</span>
+                    <div>
+                        <div class="relative">
+                            <fa-icon [icon]="password" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                            <input
+                                type="{{ hideConfirmPassword ? 'password' : 'text' }}"
+                                class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                                id="confirmPwd"
+                                formControlName="confirmPwd"
+                                required
+                            />
+                            <fa-icon [icon]="eyeConfirmPwd" (click)="toggleConfirmPasswordVisibility()" class="absolute top-1/2 transform -translate-y-1/2 right-4 text-gray-300 cursor-pointer"></fa-icon>
+                        </div>
+                        <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || modifierProfil.controls['confirmPwd'].touched) && modifierProfil.get('confirmPwd')?.hasError('required')">
+                            Veuillez confirmer le mot de passe
+                        </div>
+                        <div class="text-red-700 text-xs mt-1"  *ngIf="modifierProfil.controls['confirmPwd'].errors?.['mismatch'] && (formSubmitted ||  modifierProfil.controls['confirmPwd'].touched)">
+                            Les mots de passe ne correspondent pas
+                        </div>
+                    </div>
+                </label>
+        </div>
+        <div class="flex justify-end mb-8">
+            <button type="reset" class="rounded-xl border border-1 h-[48px] border-black w-48 text-black font-semibold bg-white px-4">Annuler</button>
+            <button *ngIf="!responseData.value"
+                type="submit"      
+                class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold px-4 bg-black"
+                [ngClass]="{ 'hover:bg-white hover:text-black': modifierProfil.valid }">
+                Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+</div>

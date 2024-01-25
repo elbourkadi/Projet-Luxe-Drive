@@ -1,0 +1,106 @@
+<div class="fixed inset-0 flex z-50 items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-xl px-8 py-2 w-[30rem] mt-5" *ngIf="!Va">
+        <div class="flex justify-between">
+            <img src="../../../assets/images/Elipce Group.svg" class="w-[190px]" alt="">
+            <div class="cursor-pointer" (click)="closePopup()">
+                <svg class="w-8 h-8 balck" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </div>  
+        </div>
+        <div class="text-2xl font-bold text-center -mt-8 mb-2">Confirmez votre réservation</div>
+        <img src="../../../../assets/images/Cart-Cars/cars_image/{{voiture.img}}.svg" alt="" class="m-auto w-[200px]">
+        <div class="mx-10 space-y-3">
+            <p class="font-thin text-center text-lg text-black/70">{{voiture.marque +" "+voiture.modele}}</p>
+        </div>
+        <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+            <div class="mt-4 flex justify-center space-x-4">
+                <div>
+                    <label for="Lieu_depart" class="block text-sm font-normal  leading-6 text-gray-900">Lieu de départ</label>
+                    <div class="relative mt-2 rounded-md shadow-sm ">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-1">
+                        <img src="../../../../assets/images/Search/Location.svg" alt="">
+                    </div>
+                    <select type="text" name="Lieu_depart" formControlName="agence_depart_id"  class="block  w-full lg:w-[14.18rem] h-[36px] rounded-md border-0 py-1.5 pl-12 p-2.5  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black/70 sm:text-sm sm:leading-6  " placeholder="Rechercher Agence">
+                        <option value="" disabled selected hidden>Choisir une agence</option>
+                        <option *ngFor="let option of agence" [value]="option.id">{{ option.nom_agence }}</option>
+                    </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="Date_depart" class="block text-sm font-normal  leading-6 text-gray-900">Date de départ</label>
+                    <input type="date" name="Date_depart" formControlName="dateDebut"  class="mt-2 block w-full lg:w-[11.68rem] h-[36px] rounded-md border-0 py-1.5 pl-4 pr-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black/70 sm:text-sm sm:leading-6" placeholder="Rechercher Agence">
+                </div>  
+            </div>
+            <div class="mt-4 flex justify-center space-x-4">
+                <div>
+                    <label for="Lieu_Reteur" class="block text-sm font-normal  leading-6 text-gray-900">Lieu de retour</label>
+                    <div class="relative mt-2 rounded-md shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <img src="../../../../assets/images/Search/Location.svg" alt="">
+                    </div>
+                    <select type="text" name="Lieu_Reteur" formControlName="agence_retour_id"  class="block w-full lg:w-[14.18rem] h-[36px]  rounded-md border-0 py-1.5 pl-12  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black/70 sm:text-sm sm:leading-6" placeholder="Rechercher Agence">
+                        <option value="" selected disabled hidden>Choisir une agence</option>
+                        <option *ngFor="let option of agence" [value]="option.id">{{ option.nom_agence }}</option>
+                    </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="Date_Retour" class="block text-sm font-normal  leading-6 text-gray-900">Date de retour</label>
+                    <input type="date" name="Date_Retour" formControlName="dateFin"  class="mt-2 block w-full lg:w-[11.5rem] h-[36px] rounded-md border-0 py-1.5 pl-4 pr-3  text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black/70 sm:text-sm sm:leading-6" placeholder="Rechercher Agence">
+                </div>
+            </div>
+        <div class="h-0.5 bg-gray-300 opacity-30 my-4 mx-auto">&nbsp;</div>
+        <div class="w-[85%] mx-auto">
+            <div class="flex justify-between">
+                <label class="text-gray-400">Nombre de jours: </label>
+                <p class="text-gray-400 font-medium">{{ calculateNumberOfDays() }}</p>
+            </div>
+            <div class="flex justify-between">
+                <label class="text-gray-400">Prix: </label>
+                <p class="text-gray-400 font-medium">{{ voiture.prix }} MAD/Jour</p>
+            </div>
+        </div>
+        <div class="h-0.5 bg-gray-300 opacity-30 mb-4 mx-auto">&nbsp;</div>
+        <div class="w-[85%] mx-auto">
+            <div class="flex justify-between">
+                <label>Prix Total: </label>
+                <p class="font-medium">{{ calculateTotalPrice() }} MAD</p>
+            </div>
+        </div>
+        <button 
+            type="submit" 
+            class="rounded-2xl border border-1 h-[40px] border-black w-full font-sans tetx-l text-slate-500 g px-4 my-2 bg-black text-white">
+            Confirmer
+        </button>
+    </form>
+    </div>
+
+
+<div class="bg-white rounded-lg shadow-xl px-8 py-2 w-[30rem] mt-8" *ngIf="Va">
+    <div class="flex justify-between pt-4">
+        <img src="../../../assets/images/Elipce Group.svg" class="w-[190px]" alt="">
+        <div class="cursor-pointer" (click)="closePopup()">
+            <svg class="w-8 h-8 balck" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </div>  
+    </div>
+    <div class="text-2xl font-bold text-center mt-4 mb-6">Félicitations, {{ nomUser }}!</div>
+    <p class="text-lg text-center mb-4">
+        Votre réservation de voiture a été confirmée avec succès. 
+        Votre numéro de réservation est le <strong>{{idReservation.substring(idReservation.length - 5)}}</strong>.
+    </p>
+    <p class="text-lg text-center mb-4">
+        Un e-mail de confirmation vous a été envoyée à l'adresse {{emailUser}}.
+    </p>
+    <p class="text-lg text-center mb-4">
+        Si vous ne le recevez pas dans les prochaines minutes, n'hésitez pas à nous contacter.
+    </p>
+    <p class="text-xl font-bold text-center py-4 my-8">
+        Merci de nous avoir choisis chez LuxeDrive !
+    </p>
+</div>
+</div>

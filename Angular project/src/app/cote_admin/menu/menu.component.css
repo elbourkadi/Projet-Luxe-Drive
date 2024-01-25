@@ -1,0 +1,20 @@
+.nav-link:hover {
+    border-radius: 12px 0px 0 12px;
+    color: black;
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+  
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+   
+::-webkit-scrollbar-thumb {
+    background: #555; 
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #888; 
+}

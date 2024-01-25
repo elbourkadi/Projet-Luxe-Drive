@@ -1,0 +1,30 @@
+<div class="container mx-auto py-8">
+
+  
+    <div class=" p-4 mb-4 flex items-center justify-between">
+      <p class="mr-auto text-gray-900 font-abel font-bold text-3xl leading-[130%] tracking-tight">Témoignages de nos Clients</p>
+      <div class="flex">
+        <button (click)="showPreviousFeedback()" class="w-12 h-12 flex items-center justify-center rounded-full overflow-hidden focus:outline-none focus:ring focus:border-blue-300 bg-white border border-gray-400">
+          <img src="assets/images/Commentaire/arrow-left.svg" alt="Image 1" class="w-6 h-6">
+        </button>
+        
+        <button (click)="showNextFeedback()" class="w-12 h-12 flex items-center justify-center rounded-full overflow-hidden focus:outline-none focus:ring focus:border-blue-300 ml-2 bg-black">
+          <img src="assets/images/Commentaire/arrow-right.svg" alt="Image 2" class="w-6 h-6">
+        </button>
+      </div>
+    </div>
+  
+
+  <div class=" p-4 mb-4 w-11/12 text-gray-900 font-inter text-2xl font-hairline leading-[150%] tracking-tighter text-opacity-40 bg-opacity-60 ">
+    <p>“{{ feedbackList[currentFeedbackIndex].text }}”</p>
+  </div>
+
+
+  <div class=" p-4 mb-4 flex items-center">
+    <img src="assets/images/Commentaire/{{ feedbackList[currentFeedbackIndex].image }}.png" alt="Image" class="w-20 h-20 rounded-full mr-4">
+    <div>
+      <p class=" font-abel text-lg leading-[150%] tracking-tighter">{{ feedbackList[currentFeedbackIndex].auteur }}</p>
+      <p class="text-gray-600 font-inter text-base leading-[150%] tracking-tighter">{{ feedbackList[currentFeedbackIndex].location }}</p>
+    </div>
+  </div>
+</div>

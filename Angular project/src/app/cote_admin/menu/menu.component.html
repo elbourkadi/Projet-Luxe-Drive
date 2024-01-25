@@ -1,0 +1,99 @@
+<div class="w-[20%] flex flex-col float-left h-full bg-black text-white">
+    <div class="mx-auto py-7">
+        <img src="assets/images/Heading.svg" alt="Logo" class="w-[10rem] flex-shrink-0">
+    </div>
+    <div class="h-0.5 bg-gray-300 opacity-30">&nbsp;</div>
+
+    <div class="flex-1 py-8 text-white overflow-y-auto">
+        <a routerLink="/dashboard" class="nav-link block px-8 py-2 mb-4 hover:bg-white">
+            <fa-icon [icon]="dashboard" class="mr-2"></fa-icon>
+            Tableau de bord
+        </a>
+
+        <div class="relative" *ngIf="admin">
+            <a class="nav-link block px-8 py-2 my-4 hover:bg-white cursor-pointer" (click)="toggleSubMenu('gestionComptes')">
+                <fa-icon [icon]="comptes" class="mr-2"></fa-icon>
+                Gestion des comptes
+                <fa-icon [icon]="openSubMenus.includes('gestionComptes') ? chevronDown : chevronRight" class="float-right"></fa-icon>
+            </a>
+            <!-- Submenu -->
+            <div *ngIf="openSubMenus.includes('gestionComptes')">
+                <a *ngIf="admin" routerLink="/ajouter-compte" class="nav-link block px-14 py-2 hover:bg-gray-300">
+                    <fa-icon [icon]="circle" class="mr-2"></fa-icon>
+                    Créer un compte
+                </a>
+                <a routerLink="/comptes" class="nav-link block px-14 py-2 hover:bg-gray-300">
+                    <fa-icon [icon]="circle" class="mr-2"></fa-icon>
+                    Comptes
+                </a>
+            </div>
+        </div>
+
+        <div class="relative" *ngIf="admin">
+            <a class="nav-link block px-8 py-2 my-4 hover:bg-white cursor-pointer" (click)="toggleSubMenu('gestionAgences')">
+                <fa-icon [icon]="agences" class="mr-2"></fa-icon>
+                Gestion des agences
+                <fa-icon [icon]="openSubMenus.includes('gestionAgences') ? chevronDown : chevronRight" class="float-right"></fa-icon>
+            </a>
+            <!-- Submenu -->
+            <div   *ngIf="openSubMenus.includes('gestionAgences') && admin" >
+                <a *ngIf="admin" routerLink="/ajouter-agence" class="nav-link block px-14 py-2 hover:bg-gray-300">
+                    <fa-icon [icon]="circle" class="mr-2"></fa-icon>
+                    Ajouter une agence
+                </a>
+                <a routerLink="/agences" class="nav-link block px-14 py-2 hover:bg-gray-300">
+                    <fa-icon [icon]="circle" class="mr-2"></fa-icon>
+                    Agences
+                </a>
+            </div>
+        </div>
+
+        <div class="relative">
+            <a class="nav-link block px-8 py-2 my-4 hover:bg-white cursor-pointer" (click)="toggleSubMenu('gestionVoitures')">
+                <fa-icon [icon]="voitures" class="mr-2"></fa-icon>
+                Gestion des voitures
+                <fa-icon [icon]="openSubMenus.includes('gestionVoitures') ? chevronDown : chevronRight" class="float-right"></fa-icon>
+            </a>
+            <!-- Submenu -->
+            <div *ngIf="openSubMenus.includes('gestionVoitures')">
+                <a routerLink="../ajouter-voiture" class="nav-link block px-14 py-2 hover:bg-gray-300">
+                    <fa-icon [icon]="circle" class="mr-2"></fa-icon>
+                    Ajouter une voiture
+                </a>
+                <a routerLink="/voitures" class="nav-link block px-14 py-2 hover:bg-gray-300">
+                    <fa-icon [icon]="circle" class="mr-2"></fa-icon>
+                    Voitures
+                </a>
+            </div>
+        </div>
+
+        <div class="relative">
+            <a class="nav-link block px-8 py-2 my-4 hover:bg-white cursor-pointer" (click)="toggleSubMenu('gestionReservations')">
+                <fa-icon [icon]="reservations" class="mr-2"></fa-icon>
+                Gestion des réservations
+                <fa-icon [icon]="openSubMenus.includes('gestionReservations') ? chevronDown : chevronRight" class="float-right"></fa-icon>
+            </a>
+            <!-- Submenu -->
+            <div *ngIf="openSubMenus.includes('gestionReservations')">
+                <a routerLink="/pre-reservations" class="nav-link block px-14 py-2 hover:bg-gray-300">
+                    <fa-icon [icon]="circle" class="mr-2"></fa-icon>
+                    Pré-réservations
+                </a>
+                <a routerLink="/reservations" class="nav-link block px-14 py-2 hover:bg-gray-300">
+                    <fa-icon [icon]="circle" class="mr-2"></fa-icon>
+                    Réservations
+                </a>
+            </div>
+        </div>
+        
+        <a routerLink="/inbox" class="nav-link block px-8 py-2 my-4 hover:bg-white">
+            <fa-icon [icon]="inbox" class="mr-2"></fa-icon>
+            Boîte de réception
+        </a>
+
+        <a routerLink="" class="nav-link block px-8 py-2 my-4 hover:bg-white" (click)="seDeconnecter()">
+            <fa-icon [icon]="logout" class="mr-2"></fa-icon>
+            Se déconnecter
+        </a>
+    </div>
+</div>

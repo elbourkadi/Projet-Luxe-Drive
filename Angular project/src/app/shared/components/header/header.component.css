@@ -1,0 +1,33 @@
+nav
+{
+  background: linear-gradient(to right ,#0F0F0F,#0F0F0F);
+  color: #FFF;
+  .content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    ul{
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      width: 40%;
+      margin: 0;
+      li{
+        cursor: pointer;
+        font-size: 22px;
+        color: #FFF;
+        text-decoration:none;
+        justify-content: space-between;
+      }
+    }
+  }
+  .mon-bouton {
+    border: 1px solid #FFF;
+    background-color: black;
+    color: #FFFFFF;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+}
+}

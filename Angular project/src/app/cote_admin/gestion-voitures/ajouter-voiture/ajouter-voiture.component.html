@@ -1,0 +1,184 @@
+<app-menu></app-menu>
+<div class="flex-1 h-full overflow-auto bg-gray-100">
+    <app-header-admin [Titre]="Page_Titre"></app-header-admin>
+    <div class="flex flex-col bg-white px-8">
+        <div class="lg:container lg:mx-auto space-y-5 my-8">
+            <p class="text-center font-bold text-3xl">{{form_Titre}}</p>
+        </div>
+        <div class="flex items-center mb-8">
+            <img [src]="currentImage" alt="Selected Image" class="w-[300px] h-[300px] rounded-xl border-4 object-cover mr-12" />
+            <button *ngIf="!responseData" (click)="onAddImage()" class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold bg-black px-4 hover:bg-white hover:text-black">Ajouter une photo</button>
+            <button *ngIf="responseData" (click)="onAddImage()" class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold bg-black px-4 hover:bg-white hover:text-black">Modefier la photo</button>
+            <button (click)="onRemoveImage()" class="rounded-xl border border-1 h-[48px] border-black w-48 text-black font-semibold bg-white px-4">Supprimer</button>
+        </div>
+        <div class="h-0.5 w-[90%] bg-gray-300 opacity-30 mb-8 mx-auto">&nbsp;</div>
+        <form [formGroup]="creervoiture" (ngSubmit)="responseData ? onSubmitNotEmpty() : onSubmit()">
+            <div class="flex justify-between mb-10">
+                <label for="marque" class="w-1/3 mr-6 block">
+                    <span class="font-semibold">Marque</span>
+                    <div class="relative">
+                        <input
+                        type="text"
+                        class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                        id="marque"
+                        formControlName="marque"
+                        [value]="responseData && responseData.name ? responseData.name : ''"
+                        required
+                        />
+                        <fa-icon [icon]="marque" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>                        
+                    </div>
+                    <div class="text-red-700 text-xs font-normal mt-1" *ngIf="(formSubmitted || creervoiture.controls['marque'].touched) && creervoiture.controls['marque'].errors?.['required']">
+                        Marque de voiture obligatoire 
+                    </div> 
+
+                </label>
+
+                <label for="modele" class="w-1/3 mr-6 block ">
+                    <span class="font-semibold">Modèle</span>
+                    <div class="relative">
+                        <input
+                        type="text"
+                        class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                        id="modele"
+                        formControlName="modele"
+                        [value]="responseData && responseData.name ? responseData.name : ''"
+                        required
+                        /> 
+                       <fa-icon [icon]="modele" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>                        
+                    </div>
+                    <div class="text-red-700 text-xs font-normal mt-1" *ngIf="(formSubmitted || creervoiture.controls['modele'].touched) && creervoiture.controls['modele'].errors?.['required']">
+                        modele de voiture obligatoire 
+                    </div> 
+                    
+                </label>
+
+                <label for="quantite" class="w-1/3 block ">
+                    <span class="font-semibold">Quantité </span>
+                    <div class="relative">
+                    <input
+                        type="number"
+                        class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                        id="quantite"
+                        formControlName="quantite"
+                        [value]="responseData && responseData.username ? responseData.username : ''"
+                        required
+                        />
+                        <fa-icon [icon]="Quantity" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>                        
+                    </div>
+                    <div class="text-red-700 text-xs font-normal mt-1" *ngIf="(formSubmitted || creervoiture.controls['quantite'].touched) && creervoiture.controls['quantite'].errors?.['required']">
+                        quantite de voiture obligatoire 
+                    </div> 
+                </label>
+            </div>
+            <div class="h-0.5 w-[90%] bg-gray-300 opacity-30 mb-8 mx-auto">&nbsp;</div>
+            <div class="flex justify-between mb-10">
+                <label for="carburant" class="w-1/4 mr-6 block  mx-3">
+                    <span class="font-semibold">Portes Energie</span>
+                    <div class="relative">
+                        <select
+                            class="w-full block pl-12  mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                            id="carburant"
+                            formControlName="carburant"
+                            required
+                        >
+                            <option value="Diesel">Diesel</option>
+                            <option value="Essence">Essence</option>
+                            <option value="Électrique">Electrice</option>
+                        </select>
+                        <fa-icon [icon]="energy" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                    </div>
+                    <div class="text-red-700 text-xs font-normal mt-1" *ngIf="(formSubmitted || creervoiture.controls['carburant'].touched) && creervoiture.controls['carburant'].errors?.['required']">
+                        portes energie de voiture obligatoire 
+                    </div> 
+                </label>
+
+                <label for="manual_gearbox" class="w-1/4 block  mx-3">
+                    <span class="font-semibold">Boîte</span>
+                    <div class="relative">
+                        <select
+                            class="w-full block pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                            id="manual_gearbox"
+                            formControlName="manual_gearbox"
+                            required
+                        >
+                            <option value="Auto">Automatique</option>
+                            <option value="Manuelle">Manuelle</option>
+                        </select>
+
+                        <fa-icon [icon]="boite" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                    </div>
+                    <div class="text-red-700 text-xs font-normal mt-1" *ngIf="(formSubmitted || creervoiture.controls['manual_gearbox'].touched) && creervoiture.controls['manual_gearbox'].errors?.['required']">
+                        boite de voiture obligatoire 
+                    </div> 
+                </label>
+
+                <label for="nb_personnes" class="w-1/4 block  mx-3">
+                    <span class="font-semibold">Capacité</span>
+                    <div class="relative">
+                        <input
+                        type="number"
+                        class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                        id="nb_personnes"
+                        formControlName="nb_personnes"
+                        [value]="responseData && responseData.name ? responseData.name : ''"
+                        required
+                      />
+
+                        <fa-icon [icon]="modele" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                    </div>
+                    <div class="text-red-700 text-xs font-normal mt-1" *ngIf="(formSubmitted || creervoiture.controls['nb_personnes'].touched) && creervoiture.controls['nb_personnes'].errors?.['required']">
+                        capacite de voiture obligatoire 
+                    </div> 
+                </label>
+
+                <label for="consommation" class="w-1/4 block  mx-3">
+                    <span class="font-semibold">Consommation</span>
+                    <div class="relative">
+                        <input
+                        type="number"
+                        class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                        id="consommation"
+                        formControlName="consommation"
+                        [value]="responseData && responseData.name ? responseData.name : ''"
+                        required
+                      />
+
+                        <fa-icon [icon]="concommation" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                    </div>
+                    <div class="text-red-700 text-xs font-normal mt-1" *ngIf="(formSubmitted || creervoiture.controls['consommation'].touched) && creervoiture.controls['consommation'].errors?.['required']">
+                        consommation de voiture obligatoire 
+                    </div> 
+                </label>
+
+
+            </div>
+            <div class="mb-10">
+                <label for="prix">
+                    <span class="font-semibold">Prix</span>
+                    <div class="relative">
+                        <input
+                            type="number"
+                            class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                            id="prix"
+                            formControlName="prix"
+                            [value]="responseData && responseData.name ? responseData.name : ''"
+                            required
+                        />
+                        <fa-icon [icon]="price" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+
+                    </div>                        
+                        <div class="text-red-700 text-xs font-normal mt-1" *ngIf="(formSubmitted || creervoiture.controls['prix'].touched) && creervoiture.controls['prix'].errors?.['required']">
+                            prix  de voiture obligatoire 
+                        </div> 
+                </label>
+            </div>
+
+            <div class="flex justify-end mb-8">
+                <button type="reset" class="rounded-xl border border-1 h-[48px] border-black w-48 text-black font-semibold bg-white px-4" onclick="clearForm()">Annuler</button>
+                <button *ngIf="!responseData" type="submit" class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold bg-black px-4 hover:bg-white hover:text-black">Enregistrer</button>
+                <button *ngIf="responseData" type="submit" class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold bg-black px-4 hover:bg-white hover:text-black">Modifier</button>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,6 @@
+[build]
+command = "python app.py"
+publish = "."
+
+[build.environment]
+NETLIFY = "true"

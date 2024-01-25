@@ -1,0 +1,31 @@
+
+        <div class="w-full h-full  flex flex-col  rounded-2xl p-1 pb-6 space-y-3 bg-white shadow-md hover:shadow-2xl  transition ease-in-out delay-150 hover:-translate-y-1 duration-100  hover:border-2 hover:border-black ">
+            <img src="../../../../assets/images/Cart-Cars/cars_image/{{Car.img}}.svg" alt="" class="w-360">
+            <div class=" mx-10 space-y-3">
+                <p class="font-thin text-lg text-black/70">{{Car.marque +" "+Car.modele}}</p>
+                <p class="text-lg">{{Car.prix}} <span class="text-xs text-slate-500">MAD/Jour</span> </p>
+                
+                <div class="flex flex-row bg-[#F6F6F6] justify-between rounded-xl">
+                    <div class="flex flex-col space-y-1 p-2 ">
+                        <img src="../../../../assets/images/Cart-Cars/speedometer.svg" alt="" class="w-3.5 mx-2.5">
+                        <p class="font-sans text-sm flex justify-center">{{Car.consommation}}</p>
+                    </div>
+                    <div class="flex flex-col space-y-1 p-2 ">
+                        <img src="../../../../assets/images/Cart-Cars/manual-gearbox.svg" alt="" class="w-3.5 mx-2.5 flex justify-center">
+                        <p class="font-sans text-sm">{{Car.manual_gearbox}}</p>
+                    </div>
+                    <div class="flex flex-col space-y-1 p-2 ">
+                        <img src="../../../../assets/images/Cart-Cars/users.svg" alt="" class="w-3.5 mx-2.5">
+                        <p class="font-sans text-sm flex justify-center">{{Car.nb_personnes}}</p>
+                    </div>
+                    <div class="flex flex-col space-y-1 p-2 ">
+                        <img src="../../../../assets/images/Cart-Cars/gas-station.svg" alt="" class="w-3.5 mx-2.5">
+                        <p class="font-sans text-sm">{{Car.carburant}}</p>
+                    </div>
+                </div>
+                <button  *ngIf="isLoggedIn" (click)="openPopup(Car.id)" class="rounded-2xl border border-1 h-[40px] border-black w-full font-sans tetx-l text-slate-500 g px-4  hover:bg-black hover:text-white">Réservez Maintenant</button>
+                <button *ngIf="!isLoggedIn"  class="rounded-2xl border border-1 h-[40px] border-black w-full font-sans tetx-l text-slate-500 g px-4  hover:bg-black hover:text-white">Cree votre compte pour reservez Maintenant </button>
+            </div>
+        </div>
+
+        <app-confirmer-reservation *ngIf="isPopupOpen" [id]="voiture" (close)="closePopupins()"></app-confirmer-reservation>

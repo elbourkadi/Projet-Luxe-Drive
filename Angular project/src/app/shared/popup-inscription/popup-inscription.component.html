@@ -1,0 +1,198 @@
+<div class="fixed inset-0 flex z-50 items-center justify-center bg-black bg-opacity-50">
+  <div *ngIf="login">
+    <div class="bg-white rounded-lg shadow-xl px-8 py-2 w-[25rem] mt-5 " *ngIf="!Va">
+        <div class="flex justify-between">
+            <img src="../../../assets/images/Elipce Group.svg" class="w-[190px]" alt="">
+            <div class="cursor-pointer" (click)="closePopup()">
+                <svg class="w-8 h-8 balck" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </div>  
+        </div>
+        <div class="text-4xl font-bold text-center py-1">
+            Créez votre compte
+        </div>
+        <form [formGroup]="newCompte" (ngSubmit)="inscrire()">
+          <div class="text-red-700 text-base font-bold -mt-0.5 flex justify-center" *ngIf="(formSubmitted && compte_deja_exist)" >
+            Cette adresse e-mail existe déjà.
+            </div>
+            <div class="flex flex-col gap-2.5 py-3">         
+              <input
+                type="text"
+                class="mt-0 w-full block px-0.5 py-1 border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-none"
+                placeholder="Nom"
+                formControlName="nom"
+                id="nom"
+              />
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['nom'].touched) && newCompte.controls['nom'].errors?.['required']">
+                Nom est obligatoire
+              </div>
+                
+              <input
+                type="text"
+                class="mt-0 w-full block px-0.5 py-1.5  focus:border-black border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-none"
+                placeholder="Prénom"
+                formControlName="prenom"
+                id="Prénom" 
+              />
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['prenom'].touched) && newCompte.controls['prenom'].errors?.['required']">
+                Prénom est obligatoire
+              </div>
+          
+              <input
+                type="text"
+                class="mt-0 w-full block px-0.5 py-1.5  focus:border-black border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-none"
+                placeholder="Adresse"
+                formControlName="address"
+                id="Adresse" 
+              />
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['address'].touched) && newCompte.controls['address'].errors?.['required']">
+                Adresse est obligatoire
+              </div>
+          
+              <input
+                type="tel"
+                class="mt-0 w-full block px-0.5 py-1.5  focus:border-black border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-none"
+                placeholder="Téléphone"
+                formControlName="telephone"
+                id="Téléphone" 
+                pattern="^[0-9+\-\s]+$"
+              />
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['telephone'].touched) && newCompte.controls['telephone'].errors?.['required']">
+                Téléphone est obligatoire
+              </div>
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['telephone'].touched) && newCompte.controls['telephone'].errors?.['pattern']">
+                Veuillez saisir un numéro de téléphone valide 
+              </div>
+          
+              <input
+                type="email"
+                class="mt-0 w-full block px-0.5 py-1.5  focus:border-black border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-none"
+                placeholder="E-mail"
+                formControlName="email"
+                id="email" 
+              />
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['email'].touched) && newCompte.controls['email'].errors?.['required']">
+                Adresse e-mail est obligatoire
+              </div>
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['email'].touched) && newCompte.controls['email'].errors?.['email']">
+                Veuillez saisir une adresse e-mail valide
+              </div>        
+              
+              <div class="relative">
+                <input
+                  type="{{ hidePassword ? 'password' : 'text' }}"
+                  class="mt-0 w-full block px-0.5 py-1.5 focus:border-black border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-none"
+                  placeholder="Mot de passe"
+                  formControlName="password"
+                  id="password"
+                />
+                <fa-icon [icon]="eyePwd" (click)="togglePasswordVisibility()" class="text-gray-300 cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"></fa-icon>
+              </div>              
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['password'].touched) && newCompte.controls['password'].errors?.['required']">
+                Mot de passe est obligatoire
+              </div>
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['password'].touched) && newCompte.controls['password'].errors?.['pattern']">
+                Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et avoir une longueur minimale de 8 caractères
+              </div> 
+          
+              <div class="relative">
+                <input
+                  type="{{ hideConfirmPassword ? 'password' : 'text' }}"
+                  class="mt-0 w-full block px-0.5 py-1.5 focus:border-black border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-none"
+                  placeholder="Confirmez votre mot de passe"
+                  formControlName="confirmePassword"
+                  id="confirmePassword"
+                />
+                <fa-icon [icon]="eyeConfirmPwd" (click)="toggleConfirmPasswordVisibility()" class="text-gray-300 cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"></fa-icon>
+              </div> 
+              <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted || newCompte.controls['confirmePassword'].touched) && newCompte.get('confirmePassword')?.hasError('required')">
+                Veuillez confirmer le mot de passe
+              </div>
+              <div class="text-red-700 text-xs font-normal -mt-2.5"  *ngIf="newCompte.controls['confirmePassword'].errors?.['mismatch'] && (formSubmitted ||  newCompte.controls['confirmePassword'].touched)">
+                Les mots de passe ne correspondent pas
+              </div>
+            </div>
+
+            <button class="bg-black text-white font-semibold py-2 mt-1 px-4  focus:outline-none focus:ring-2 w-full rounded-3xl">Enregistrer</button>
+        </form>
+
+        <div>
+           <p class="text-center my-2">Vous avez déjà un compte ? <button class="font-bold" (click)="seatch()">Se connecter</button> </p>
+        </div>
+    </div>
+    
+
+    <div class="bg-white rounded-lg shadow-xl p-8 w-[25rem] " *ngIf="Va">
+        <div class="flex justify-between">
+            <img src="../../../assets/images/Elipce Group.svg" class="w-[190px]" alt="">
+            <div class="cursor-pointer" (click)="closePopup()">
+                <svg class="w-8 h-8 balck" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </div>      
+        </div>
+        <div class="text-4xl font-bold text-center py-3">Connectez-vous</div>
+        <form [formGroup]="se_connecter" (ngSubmit)="connecter()">
+            <div class="text-red-700 text-base font-bold -mt-0.5 flex justify-center" *ngIf="(formSubmitted_connecter && erro_de_connecter)" >
+              E-mail ou mot de passe incorrect.
+            </div>
+            <div class="text-red-700 text-base font-bold -mt-0.5 flex justify-center" *ngIf="(formSubmitted_connecter && erro_de_validation)" >
+              Veuillez activer votre compte en vérifiant votre e-mail
+            </div>
+            <div class="flex flex-col gap-3 py-5">         
+                <input type="email"
+                  class="mt-0 w-full block px-0.5  py-1.5 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-black focus:outline-none "
+                  placeholder="E-mail"
+                  id="email" 
+                  formControlName="email"
+                />
+                <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted_connecter || se_connecter.controls['email'].touched) && se_connecter.controls['email'].errors?.['required']">
+                  Adresse e-mail est obligatoire
+                </div>
+                <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted_connecter || se_connecter.controls['email'].touched) && se_connecter.controls['email'].errors?.['email']">
+                  Veuillez saisir une adresse e-mail valide
+                </div>
+
+                <div class="relative">
+                  <input
+                    type="{{ hidePasswordLogin ? 'password' : 'text' }}"
+                    class="mt-0 w-full block px-0.5 py-1.5 focus:border-black border-0 border-b-2 border-gray-200 focus:ring-0 focus:outline-none"
+                    placeholder="Mot de passe"
+                    formControlName="password"
+                    id="password"
+                  />
+                  <fa-icon [icon]="eyePwdLogin" (click)="togglePasswordLoginVisibility()" class="text-gray-300 cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"></fa-icon>
+                </div>
+                <div class="text-red-700 text-xs font-normal -mt-2.5" *ngIf="(formSubmitted_connecter || se_connecter.controls['password'].touched) && se_connecter.controls['password'].errors?.['required']">
+                  Mot de passe est obligatoire
+                </div>
+                <div class="flex justify-end font-bold text-sm">Mot de passe oublié?</div>
+            </div>
+            
+            <button class="bg-black text-white font-semibold py-2 mt-4 px-4  focus:outline-none focus:ring-2 w-full rounded-3xl" (click)="connecter()">Se connecter</button>            
+        </form>
+        <div>
+           <p class="text-center my-4">Vous n'avez pas de compte ? <button class="font-bold"(click)="seatch()" > S’inscrire</button> </p>
+        </div>
+    </div>    
+  </div>
+
+
+    <div class="bg-white rounded-lg shadow-xl p-8 w-[25rem] " *ngIf="confirmation">
+      <div class="flex justify-between">
+          <img src="../../../assets/images/Elipce Group.svg" class="w-[190px]" alt="">
+          <div class="cursor-pointer" (click)="closePopup()">
+              <svg class="w-8 h-8 balck" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+          </div>      
+      </div>
+      <div class="text-xl font-bold text-center py-3">Veuillez activer votre compte en vérifiant votre e-mail {{ newCompte.value.email}} </div>
+
+
+  </div>
+</div>

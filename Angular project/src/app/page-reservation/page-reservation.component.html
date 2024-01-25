@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<div class="lg:container lg:mx-auto space-y-5 my-16">
+    <p class="text-center font-bold text-4xl">Nos Voitures</p>
+    <div class="flex justify-center mt-4">
+        <p class="text-center text-lg w-4/5">Sélectionnez la voiture qui correspond parfaitement à vos envies et à vos besoins. et réservez-la en ligne.</p>
+    </div>
+</div>
+<div class="py-10">
+    <app-search-cars></app-search-cars>   
+</div>
+
+<div class="mt-10 container mx-auto">
+    <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+        <div class="grid lg:grid-cols-4 gap-2 md:grid-cols-2 grid-cols-2">
+            <div class="w-full">
+                <select formControlName="Collection" id="Collection" class="mt-1 block w-full pl-3 pr-10 py-2 text-base  border-2 border-gray-300 sm:text-sm rounded-md">
+                    <option value="" disabled selected hidden>Collection</option>
+                    <option *ngFor="let option of Collections" [value]="option">{{ option }}</option>
+               </select>
+            </div> 
+            
+            <div class="w-full">
+                <input type="number" formControlName="Prix" id="Prix" placeholder="Prix" class="text-black mt-1 placeholder-black w-full pl-3 pr1 py-2 text-base border-2 border-gray-300 sm:text-sm rounded-md">
+            </div>
+        
+            <div class="w-full">
+                <select formControlName="Ville" id="Ville" class="mt-1 block w-full pl-3 pr-10 py-2 text-base  border-2 border-gray-300 sm:text-sm rounded-md">
+                    <option value="" disabled selected hidden>Ville</option>
+                    <option *ngFor="let option of Villes" [value]="option">{{ option }}</option>
+                </select>
+            </div> 
+
+            <div class="w-full">
+                <input type="date" formControlName="Date" id="Date" class="text-black mt-1 placeholder-black w-full pl-3 pr1 py-2 text-base border-2 border-gray-300 sm:text-sm rounded-md">
+            </div>     
+        </div>
+    </form>
+</div>
+
+<div class="grid md:grid-cols-2 grid-cols-1  lg:grid-cols-3 m-5 mx-10 py-10 gap-y-4 gap-x-8">
+    <div *ngFor="let car of displayedCars">
+        <app-cart-car  [Car]="car"></app-cart-car>  
+    </div>
+
+</div>   
+<div class="flex justify-center">
+    <div class=" my-12 ">
+        <button (click)="loadMoreCars()" class="  justify-center basis-1/2 bg-black rounded-3xl p-4 flex items-center gap-0.5 lg:w-[11.87rm] text-white ">Voir plus des voitures
+            <img src="../../../../assets/images/Search/arrow-right.svg" class="mt-1" alt="">   
+        </button>                
+    </div>        
+</div>
+<app-footer></app-footer>

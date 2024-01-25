@@ -1,0 +1,47 @@
+<div class="w-full py-5 lg:px-10 px-4 mx-auto  flex items-center justify-between bg-black">
+  <div>
+    <img routerLink="/accueil" src="assets/images/Heading.svg" alt="" class="w-[10rem] flex-shrink-0 cursor-pointer">
+  </div>
+
+  <div class="md:flex justify-center space-x-8 font-semibold hidden">
+    <a routerLink="/accueil" class="text-white hover:text-gray-300">Accueil</a>
+    <a routerLink="/nos-voitures" class="text-white hover:text-gray-300">Réservation</a>
+    <a routerLink="/nos-agences" class="text-white hover:text-gray-300">Agences</a>
+    <a routerLink="/contact" class="text-white hover:text-gray-300">Contact</a>
+  </div>
+
+  <button  *ngIf="!isLoggedIn" (click)="openPopup()" class="border-2 border-opacity-50 border-white bg-black text-white font-semibold py-[8px] rounded-3xl px-[20px] hidden md:flex ">Se connecter / S’inscrire</button>
+  
+    <div *ngIf="isLoggedIn" class="relative inline-block">
+      <div class="flex items-center space-x-2 cursor-pointer" (click)="toggleDropdown()">
+      <!--  <img src="../../../../assets/images/users/Frame 85.svg" class="rounded-full h-10 w-10">-->
+        <div class=" bg-gray-500 text-white font-bold text-xl rounded-full h-10 w-10 flex justify-center items-center">
+          {{ prenom[0] }}{{nom[0] }}
+        </div>
+        <p class="text-white font-bold flex items-center translate-y-2">{{name}}</p>
+      </div>
+      <div *ngIf="showDropdown" class="dropdown z-50 space-y-2 text-white absolute bg-white p-2 mt-2 w-48 rounded-lg shadow-lg right-0 font-medium">
+        <div class="relative">
+          <fa-icon [icon]="profil" class="absolute top-1/2 transform -translate-y-1/2 left-3 text-black"></fa-icon>
+          <button (click)="changeProfile()" class="block w-full text-center bg-gray-100 text-black py-2 px-4 rounded-lg">Modifier le profil</button>
+        </div>
+        <div class="relative">
+          <fa-icon [icon]="history" class="absolute top-1/2 transform -translate-y-1/2 left-3 text-black"></fa-icon>
+          <button (click)="viewHistory()" class="block w-full text-center bg-gray-300 text-black py-2 px-4 rounded-lg">Historique</button>
+        </div>
+        <button (click)="logout()" class="block w-full text-center bg-black py-2 px-4 rounded-lg">Se déconnecter</button>
+      </div>
+    </div>
+          
+  <div class="md:hidden">
+    <button (click)="toggleMenu()" class="text-white focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<app-popup-inscription *ngIf="isPopupOpen" (close)="closePopupins()" (dataEvent)="receiveData($event)"></app-popup-inscription>
+
+

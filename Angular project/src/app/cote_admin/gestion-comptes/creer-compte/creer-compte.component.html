@@ -1,0 +1,204 @@
+<app-menu></app-menu>
+<div class="flex-1 h-full overflow-auto bg-gray-100">
+    <app-header-admin [Titre]="Page_Titre"></app-header-admin>
+    <div class="flex flex-col bg-white px-8">
+        <div class="lg:container lg:mx-auto space-y-5 my-8">
+            <p class="text-center font-bold text-3xl">{{form_Titre}} </p>
+        </div>
+        <div class="flex items-center mb-8">
+            <img *ngIf="!responseData" [src]="currentImage" alt="Selected Image" class="w-[100px] h-[100px] rounded-full border-4 object-cover mr-12" />
+            <div *ngIf="responseData" class=" bg-gray-600 text-white font-bold text-4xl rounded-full w-[100px] h-[100px] flex justify-center items-center mr-12">
+                {{ responseData.prenom[0] }}{{responseData.nom[0] }}
+              </div>
+            <button *ngIf="!responseData" (click)="onAddImage()" class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold bg-black px-4 hover:bg-white hover:text-black">Ajouter une photo</button>
+            <button *ngIf="responseData" (click)="onAddImage()" class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold bg-black px-4 hover:bg-white hover:text-black">Modefier la photo</button>
+            <button (click)="onRemoveImage()" class="rounded-xl border border-1 h-[48px] border-black w-48 text-black font-semibold bg-white px-4">Supprimer</button>
+        </div>
+        <div class="h-0.5 w-[90%] bg-gray-300 opacity-30 mb-8 mx-auto">&nbsp;</div>
+        <form [formGroup]="creerCompte" (ngSubmit)="responseData ? onSubmitNotEmpty() : onSubmit()">
+            <div class="flex justify-between mb-10">
+                <label for="nom" class="w-1/2 mr-6 block">
+                    <span class="font-semibold">Nom :</span>
+                    <input
+                      type="text"
+                      class="w-full block p-4 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                      id="nom"
+                      formControlName="nom"
+                      required
+                    />
+                    <div class="text-red-700 text-xs " *ngIf="(formSubmitted || creerCompte.controls['nom'].touched) && creerCompte.controls['nom'].errors?.['required']">
+                        Nom est obligatoire
+                    </div>
+                </label>
+
+                <label for="prenom" class="w-1/2 block">
+                    <span class="font-semibold">Prénom :</span>
+                    <input
+                      type="text"
+                      class="w-full block p-4 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                      id="prenom"
+                      formControlName="prenom"
+                    
+                      required
+                    />
+                    <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['prenom'].touched) && creerCompte.controls['prenom'].errors?.['required']">
+                        Prénom est obligatoire
+                    </div>
+                </label>
+            </div>
+            <div class="h-0.5 w-[90%] bg-gray-300 opacity-30 mb-8 mx-auto">&nbsp;</div>
+            <div class="flex justify-between mb-10">
+                <label for="email" class="w-1/2 mr-6 block">
+                    <span class="font-semibold">Adresse E-mail :</span>
+                    <div>
+                    <div class="relative">
+                        <input
+                        [attr.readonly]="responseData ? true : null"
+                            type="email"
+                            class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                            id="email"
+                            formControlName="email"
+                       
+                            required
+                        />
+ 
+                        <fa-icon [icon]="email" class="absolute top-1/2  transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                    </div>  
+                    <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['email'].touched) && creerCompte.controls['email'].errors?.['required']">
+                        Adresse e-mail est obligatoire 
+                    </div>
+                    <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['email'].touched) && creerCompte.controls['email'].errors?.['email']">
+                        Veuillez saisir une adresse e-mail valide
+                    </div>                      
+                    </div>
+
+                </label>
+
+                <label for="telephone" class="w-1/2 block">
+                    <span class="font-semibold">Téléphone :</span>
+                    <div>
+                     <div class="relative">
+                        <input
+                       
+                            type="text"
+                            class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                            id="telephone"
+                            formControlName="telephone"
+                         
+                            required
+                        />
+                        <fa-icon [icon]="tele" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                    </div>   
+                    <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['telephone'].touched) && creerCompte.controls['telephone'].errors?.['required']">
+                        Téléphone est obligatoire 
+                    </div>
+                    <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['telephone'].touched) && creerCompte.controls['telephone'].errors?.['pattern']">
+                        Veuillez saisir un numéro de téléphone valide
+                    </div>                       
+                    </div>
+
+                </label>
+            </div>
+            <div class="mb-10">
+                <label for="address">
+                    <span class="font-semibold">Adresse :</span>
+                    <div>
+                    <div class="relative">
+                        <input
+                            type="text"
+                            class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                            id="address"
+                            formControlName="address"
+                           
+                            required
+                        />
+                        <fa-icon [icon]="adresse" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                    </div>    
+                    <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['address'].touched) && creerCompte.controls['address'].errors?.['required']">
+                        Adresse est obligatoire 
+                    </div>                      
+                    </div>
+
+                </label>
+            </div>
+            <div class="h-0.5 w-[90%] bg-gray-300 opacity-30 mb-8 mx-auto">&nbsp;</div>
+            <div class="flex justify-between mb-10">
+                <label for="role" class="w-1/3 mr-6">
+                    <span class="font-semibold">Type d'utilisateur :</span>
+                    <div class="mt-4 uppercase text-lg text-gray-600">
+                        <label for="client" class="flex mb-4">
+                            <input type="radio" id="client" name="role" formControlName="role" value="user" />
+                            <span class="ml-4">Client</span>
+                        </label>
+                        <label for="manager" class="flex mb-4">
+                            <input type="radio" id="manager" name="role" formControlName="role" value="manager" />
+                            <span class="ml-4">Agence Manager</span>
+                        </label>
+                        <label for="admin" class="flex mb-4">
+                            <input type="radio" id="admin" name="role" formControlName="role" value="admin" />
+                            <span class="ml-4">Super Manager</span>
+                        </label>
+                    </div>
+                </label>
+                <div class="w-2/3 ml-12 "  *ngIf="!responseData">
+                    <label for="password">
+                        <span class="font-semibold">Mot de passe :</span>
+                        <div>
+                      <div class="relative">
+                            <fa-icon [icon]="password" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                            <input
+                                type="{{ hidePassword ? 'password' : 'text' }}"
+                                class="w-full block p-4 pl-12 mt-4 mb-2 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                                id="password"
+                                formControlName="password"
+                                required
+                            />
+                            <fa-icon [icon]="eyePwd" (click)="togglePasswordVisibility()" class="absolute top-1/2 transform -translate-y-1/2 right-4 text-gray-300 cursor-pointer"></fa-icon>
+                        </div>    
+                        <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['password'].touched) && creerCompte.controls['password'].errors?.['required']">
+                            Mot de passe est obligatoire 
+                        </div>   
+                        <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['password'].touched) && creerCompte.controls['password'].errors?.['pattern']">
+                            Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et avoir une longueur minimale de 8 caractères
+                        </div>                   
+                        </div>
+  
+                    </label>
+                  
+                    <label for="confirmPwd">
+                        <span class="font-semibold">Confirmer le mot de passe :</span>
+                        <div>
+                            <div class="relative">
+                                <fa-icon [icon]="password" class="absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-300"></fa-icon>
+                                <input
+                                    type="{{ hideConfirmPassword ? 'password' : 'text' }}"
+                                    class="w-full block p-4 pl-12 mt-4 h-10 border border-gray-200 rounded-lg focus:ring-0 focus:outline-none"
+                                    id="confirmPwd"
+                                    formControlName="confirmPwd"
+                                    required
+                                />
+                                <fa-icon [icon]="eyeConfirmPwd" (click)="toggleConfirmPasswordVisibility()" class="absolute top-1/2 transform -translate-y-1/2 right-4 text-gray-300 cursor-pointer"></fa-icon>
+                            </div>
+                            <div class="text-red-700 text-xs mt-1" *ngIf="(formSubmitted || creerCompte.controls['confirmPwd'].touched) && creerCompte.get('confirmPwd')?.hasError('required')">
+                                Veuillez confirmer le mot de passe
+                            </div>
+                            <div class="text-red-700 text-xs mt-1"  *ngIf="creerCompte.controls['confirmPwd'].errors?.['mismatch'] && (formSubmitted ||  creerCompte.controls['confirmPwd'].touched)">
+                                Les mots de passe ne correspondent pas
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="flex justify-end mb-8">
+                <button type="reset" class="rounded-xl border border-1 h-[48px] border-black w-48 text-black font-semibold bg-white px-4">Annuler</button>
+                <button *ngIf="!responseData"
+                    type="submit"      
+                    class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold px-4 bg-black"
+                    [ngClass]="{ 'hover:bg-white hover:text-black': creerCompte.valid }">
+                    Enregistrer
+                </button>
+                <button *ngIf="responseData" type="submit"   class="mx-8 rounded-xl border border-1 h-[48px] border-black w-48 text-white font-semibold bg-black px-4 hover:bg-white hover:text-black">Modifier</button>
+            </div>
+        </form>
+    </div>
+</div>

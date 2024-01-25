@@ -1,0 +1,88 @@
+<app-menu></app-menu>
+<div class="flex-1 h-full overflow-auto bg-gray-100">
+    <app-header-admin [Titre]="Page_Titre"></app-header-admin>
+    <div class="flex flex-col bg-white px-8">
+        <div class="lg:container lg:mx-auto space-y-5 my-8">
+            <p class="text-center font-bold text-3xl">Liste des réservations</p>
+        </div>
+        <form class="flex items-center my-10">   
+            <div class="relative w-full">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"/>
+                    </svg>
+                </div>
+                <input name="name" (ngModelChange)="Search()" [(ngModel)]="inputValue" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full ps-10 p-2.5" placeholder="Rechercher ..." required>
+            </div>      
+            <button (click)="Search()" type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-black rounded-lg border border-gray-700 hover:bg-gray-300 hover:text-black focus:ring-4 focus:outline-none focus:ring-gray-300 ">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+                <span class="sr-only">Rechercher</span>
+            </button>
+        </form>
+        <div class="hover:border-black mb-5 flex justify-center">
+            <div class="flex w-[30%]">
+                <select class="block appearance-none  bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" (change)="onSelectionChange($event)">
+                    <option value="">Tout les reservation</option>
+                    <option *ngFor="let agence of agences" [value]="agence.id">{{ agence.nom_agence }}</option>
+                </select>
+                <div class="pointer-events-none   flex items-center -mx-5 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M8 7l4-4 4 4M8 17l4-4 4 4"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="mat-elevation-z8 mb-5">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header >ID</th>
+                    <td mat-cell *matCellDef="let element"> {{element.sequentialNumber}} </td>
+                </ng-container>         
+                <ng-container matColumnDef="client">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+                    <td mat-cell *matCellDef="let element"> {{element.user_id}} </td>
+                </ng-container>
+                <ng-container matColumnDef="tele">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Téléphone</th>
+                    <td mat-cell *matCellDef="let element" class="bg-black"> {{element.tele}} </td>
+                </ng-container>
+                <ng-container matColumnDef="voiture">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Voiture</th>
+                    <td mat-cell *matCellDef="let element"> {{element.voiture}} </td>
+                </ng-container>
+                <ng-container matColumnDef="depart">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Départ</th>
+                    <td mat-cell *matCellDef="let element"> {{element.depart}} </td>
+                </ng-container>
+                <ng-container matColumnDef="retour">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Retour</th>
+                    <td mat-cell *matCellDef="let element"> {{element.retour}} </td>
+                </ng-container>
+                <ng-container matColumnDef="prix">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Prix</th>
+                    <td mat-cell *matCellDef="let element"> {{element.prix}} DH</td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element" class="custom-cell">
+                        <select id="status" class="block pl-3 pr-10 py-2 text-base border-2 border-gray-300 rounded-md" [(ngModel)]="element.reservation" (ngModelChange)="onStatusChange(element)">
+                            <option value="" disabled hidden></option>
+                            <option *ngFor="let status of statuses" [value]="status" [attr.selected]="element.reservation === status ? true : null">
+                              {{ status }}
+                            </option>
+                          </select>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 15]"
+                             showFirstLastButtons           
+                             aria-label="Select page of periodic elements">
+              </mat-paginator>
+            </div>  
+    </div>
+</div>
